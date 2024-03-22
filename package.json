@@ -30,6 +30,12 @@
 		"typescript": "^5.4.3"
 	},
 	"dependencies": {
-		"dotenv": "^16.4.5"
+		"dotenv": "^16.4.5",
+		"whatsapp-web.js": "^1.23.0"
+	},
+	"pnpm": {
+		"patchedDependencies": {
+			"fluent-ffmpeg@2.1.2": "patches/fluent-ffmpeg@2.1.2.patch"
+		}
 	}
 }
