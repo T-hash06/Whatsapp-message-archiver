@@ -1,12 +1,13 @@
 import 'dotenv/config';
 
 import { createClient, initialize } from './client';
+import { logger } from './logger';
 import { createMongoose } from './mongo';
 
 async function main() {
 	console.clear();
 
-	console.log('Starting app...');
+	logger.info('Starting app...');
 
 	await createMongoose();
 	await createClient();

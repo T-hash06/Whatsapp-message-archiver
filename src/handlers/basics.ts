@@ -1,6 +1,8 @@
 import * as qrcode from 'qrcode-terminal';
 import { Client } from 'whatsapp-web.js';
 
+import { logger } from '../logger';
+
 export const addBasicHandlers = (client: Client) => {
 	let qrReceived = false;
 
@@ -11,27 +13,26 @@ export const addBasicHandlers = (client: Client) => {
 	});
 
 	client.on('remote_session_saved', () => {
-		console.log('Remote session saved');
+		logger.success('Remote session saved');
 	});
 
 	client.on('auth_failure', (msg) => {
-		console.log('Authentication failure: ', msg);
+		logger.error(`Authentication failure: ${msg}`);
 	});
 
 	client.on('authenticated', () => {
-		console.clear();
-
 		if (qrReceived) {
-			console.log(
+			logger.success(
 				'Authenticated, please wait until the remote session is saved'
 			);
+			console.clear();
 			return;
 		}
 
-		console.log('Authenticated with stored session');
+		logger.success('Authenticated with stored session');
 	});
 
 	client.on('ready', () => {
-		console.log('Client is ready');
+		logger.info('Client is ready');
 	});
 };

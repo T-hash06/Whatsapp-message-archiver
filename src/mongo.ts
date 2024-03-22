@@ -1,5 +1,7 @@
 import mongooseDefault from 'mongoose';
 
+import { logger } from './logger';
+
 export class MongoSingleton {
 	private static instance: typeof mongooseDefault;
 	private static connected = false;
@@ -27,7 +29,7 @@ export class MongoSingleton {
 
 		this.connected = true;
 
-		console.log('Connected to MongoDB');
+		logger.info('Connected to MongoDB');
 	}
 }
 
