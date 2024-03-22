@@ -1,0 +1,35 @@
+{
+	"name": "whatsapp-logger-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "swc src/app.ts --out-dir dist && node dist/src/app.js",
+		"check:tsc": "tsc --noEmit",
+		"check:lint": "eslint .",
+		"check:prettier": "prettier --check .",
+		"check": "pnpm check:tsc && pnpm check:lint && pnpm check:prettier",
+		"commit": "pnpm check && git add . && git commit -am ",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"devDependencies": {
+		"@swc/cli": "^0.3.10",
+		"@swc/core": "^1.4.8",
+		"@types/node": "^20.11.30",
+		"@typescript-eslint/eslint-plugin": "^7.3.1",
+		"@typescript-eslint/parser": "^7.3.1",
+		"chokidar": "^3.6.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-simple-import-sort": "^12.0.0",
+		"prettier": "^3.2.5",
+		"typescript": "^5.4.3"
+	},
+	"dependencies": {
+		"dotenv": "^16.4.5"
+	}
+}
