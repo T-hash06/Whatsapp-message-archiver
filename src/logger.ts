@@ -1,17 +1,25 @@
 const reset = '\x1b[0m';
 
-function formatMessage(msg: string) {
+export function formatNumber(num: number) {
+	return num < 10 ? `0${num}` : num;
+}
+
+export function getFormattedDate() {
 	const date = new Date();
 
-	const hours = date.getHours();
-	const minutes = date.getMinutes();
-	const seconds = date.getSeconds();
+	const hours = formatNumber(date.getHours());
+	const minutes = formatNumber(date.getMinutes());
+	const seconds = formatNumber(date.getSeconds());
 
-	const day = date.getDate();
-	const month = date.getMonth();
+	const day = formatNumber(date.getDate());
+	const month = formatNumber(date.getMonth());
 	const year = date.getFullYear();
 
-	return `[${day}/${month}/${year} ${hours}:${minutes}:${seconds}] ${msg}`;
+	return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
+function formatMessage(msg: string) {
+	return `[${getFormattedDate()}] ${msg}`;
 }
 
 export const logger = {
