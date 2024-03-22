@@ -1,7 +1,8 @@
-import * as qrcode from 'qrcode-terminal';
 import { Client, RemoteAuth } from 'whatsapp-web.js';
 import { MongoStore } from 'wwebjs-mongo';
 
+import { addBasicHandlers } from './handlers/basics';
+import { addMessageHandler } from './handlers/messages';
 import { createMongoose } from './mongo';
 
 export class ClientSingleton {
@@ -14,12 +15,13 @@ export class ClientSingleton {
 
 		if (!ClientSingleton.instance) {
 			const store = new MongoStore({ mongoose: mongoose });
+
 			const client = new Client({
 				authStrategy: new RemoteAuth({
 					store: store,
 					backupSyncIntervalMs: 36_000_000,
+					clientId: 'T-Hash06',
 				}),
-				qrMaxRetries: 10,
 			});
 
 			this.instance = client;
@@ -34,21 +36,10 @@ export const createClient = () => ClientSingleton.getInstance();
 export async function initialize() {
 	const client = await ClientSingleton.getInstance();
 
-	return new Promise<null>((resolve) => {
-		client.on('qr', (qr) => {
-			console.clear();
-			qrcode.generate(qr, { small: true });
-		});
+	addBasicHandlers(client);
+	addMessageHandler(client);
 
-		client.on('authenticated', () => {
-			console.log('Authenticated');
-		});
-
-		client.on('ready', () => {
-			console.log('Client is ready');
-			resolve(null);
-		});
-
+	return new Promise<void>(() => {
 		client.initialize();
 	});
 }

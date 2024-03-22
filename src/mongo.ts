@@ -26,6 +26,8 @@ export class MongoSingleton {
 		await mongooseDefault.connect(process.env.MONGO_URI);
 
 		this.connected = true;
+
+		console.log('Connected to MongoDB');
 	}
 }
 
