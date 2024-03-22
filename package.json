@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "swc src/app.ts --out-dir dist && node dist/src/app.js",
+		"dev": "tsc src/app.ts --outDir dist --skipLibCheck && node dist/app.js",
 		"check:tsc": "tsc --noEmit",
 		"check:lint": "eslint .",
 		"check:prettier": "prettier --check .",
@@ -15,23 +15,25 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"type": "module",
+	"type": "commonjs",
 	"devDependencies": {
-		"@swc/cli": "^0.3.10",
-		"@swc/core": "^1.4.8",
 		"@types/node": "^20.11.30",
+		"@types/qrcode-terminal": "^0.12.2",
 		"@typescript-eslint/eslint-plugin": "^7.3.1",
 		"@typescript-eslint/parser": "^7.3.1",
-		"chokidar": "^3.6.0",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-simple-import-sort": "^12.0.0",
 		"prettier": "^3.2.5",
+		"qrcode-terminal": "^0.12.0",
 		"typescript": "^5.4.3"
 	},
 	"dependencies": {
 		"dotenv": "^16.4.5",
-		"whatsapp-web.js": "^1.23.0"
+		"mongoose": "^8.2.3",
+		"puppeteer": "^22.6.0",
+		"whatsapp-web.js": "^1.23.0",
+		"wwebjs-mongo": "^1.1.0"
 	},
 	"pnpm": {
 		"patchedDependencies": {

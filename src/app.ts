@@ -1,9 +1,17 @@
 import 'dotenv/config';
 
+import { createClient, initialize } from './client';
+import { createMongoose } from './mongo';
+
 async function main() {
-	console.log(process.env.TEST);
+	await createMongoose();
+	await createClient();
+
+	console.clear();
+
+	await initialize();
 }
 
 main().then(() => {
-	console.log('done');
+	console.log('App finished');
 });
