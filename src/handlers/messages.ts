@@ -73,8 +73,6 @@ export const addMessageHandler = (client: Client) => {
 			time,
 		};
 
-		logger.info(`Message from ${contact}`);
-
 		try {
 			const newMessage = new Message(messageData);
 			await newMessage.save();
@@ -83,5 +81,7 @@ export const addMessageHandler = (client: Client) => {
 			console.log(message);
 			console.log(error);
 		}
+
+		logger.info(`Message from ${contact} saved`);
 	});
 };
