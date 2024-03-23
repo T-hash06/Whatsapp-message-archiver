@@ -1,9 +1,9 @@
 import type { Client } from 'whatsapp-web.js';
 
-import { getFormattedDate } from '../logger';
-import { logger } from '../logger';
-import { Media } from '../schemas/media';
-import { Message } from '../schemas/message';
+import { getFormattedDate } from '@/logger';
+import { logger } from '@/logger';
+import { Media } from '@/schemas/media';
+import { Message } from '@/schemas/message';
 
 function getPhoneNumber(phone: string) {
 	return phone.split('@')[0];

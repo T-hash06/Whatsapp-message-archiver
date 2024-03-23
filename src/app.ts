@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
-import { createClient, initialize } from './client';
-import { logger } from './logger';
-import { createMongoose } from './mongo';
+import { createClient, initialize } from '@/client';
+import { logger } from '@/logger';
+import { createMongoose } from '@/mongo';
 
 async function main() {
 	console.clear();

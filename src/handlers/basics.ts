@@ -1,7 +1,7 @@
 import * as qrcode from 'qrcode-terminal';
 import { Client } from 'whatsapp-web.js';
 
-import { logger } from '../logger';
+import { logger } from '@/logger';
 
 export const addBasicHandlers = (client: Client) => {
 	let qrReceived = false;

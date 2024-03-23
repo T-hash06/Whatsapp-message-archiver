@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "tsc --project tsconfig.json && node dist/app.js",
+		"dev": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node dist/app.js",
 		"check:tsc": "tsc --noEmit",
 		"check:lint": "eslint .",
 		"check:prettier": "prettier --check .",
@@ -26,6 +26,7 @@
 		"eslint-plugin-simple-import-sort": "^12.0.0",
 		"prettier": "^3.2.5",
 		"qrcode-terminal": "^0.12.0",
+		"tsc-alias": "^1.8.8",
 		"typescript": "^5.4.3"
 	},
 	"dependencies": {
