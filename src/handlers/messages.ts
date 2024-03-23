@@ -2,18 +2,8 @@ import type { Client } from 'whatsapp-web.js';
 
 import { getFormattedDate } from '../logger';
 import { logger } from '../logger';
-
-interface MessageSchema {
-	id: string;
-	responseTo: string | null;
-	media: string | null;
-	contact: string;
-	body: string;
-	type: string;
-	from: string;
-	to: string;
-	time: string;
-}
+import { Media } from '../schemas/media';
+import { Message } from '../schemas/message';
 
 function getPhoneNumber(phone: string) {
 	return phone.split('@')[0];
@@ -33,7 +23,7 @@ export const addMessageHandler = (client: Client) => {
 
 		const type = message.type;
 
-		let body = message.body;
+		let body = message.body ?? '';
 		let responseTo = null;
 		let media = null;
 
@@ -49,9 +39,20 @@ export const addMessageHandler = (client: Client) => {
 				.split('/')[1]
 				.split(';')[0];
 
-			media = `./media/${mediaId}.${mediaExtension}`;
+			media = `${mediaId}.${mediaExtension}`;
 
-			// TODO: Save media to database
+			try {
+				const newMedia = new Media({
+					id: media,
+					mimeType: messageMedia.mimetype,
+					data: messageMedia.data,
+				});
+
+				await newMedia.save();
+			} catch (error) {
+				logger.error('Error saving media to database');
+				console.log(error);
+			}
 		}
 
 		if (message.type === 'location') {
@@ -60,7 +61,7 @@ export const addMessageHandler = (client: Client) => {
 
 		// TODO: Add compatibility for VCards
 
-		const messageData: MessageSchema = {
+		const messageData = {
 			id,
 			responseTo,
 			media,
@@ -72,6 +73,15 @@ export const addMessageHandler = (client: Client) => {
 			time,
 		};
 
-		logger.info(`\n${JSON.stringify(messageData, null, 4)}`);
+		logger.info(`Message from ${contact}`);
+
+		try {
+			const newMessage = new Message(messageData);
+			await newMessage.save();
+		} catch (error) {
+			logger.error('Error saving message to database');
+			console.log(message);
+			console.log(error);
+		}
 	});
 };
