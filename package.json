@@ -5,12 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node dist/app.js",
-		"check:tsc": "tsc --noEmit",
+		"check:tsc": "tsc -p tsconfig.json --noEmit",
 		"check:lint": "eslint .",
 		"check:prettier": "prettier --check .",
 		"check": "pnpm check:tsc && pnpm check:lint && pnpm check:prettier",
-		"commit": "pnpm check && git add . && git commit -am ",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"commit": "pnpm check && git add . && git commit -am "
 	},
 	"keywords": [],
 	"author": "",

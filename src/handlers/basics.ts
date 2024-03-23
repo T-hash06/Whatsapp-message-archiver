@@ -22,10 +22,11 @@ export const addBasicHandlers = (client: Client) => {
 
 	client.on('authenticated', () => {
 		if (qrReceived) {
-			logger.success(
-				'Authenticated, please wait until the remote session is saved'
-			);
 			console.clear();
+			logger.printHistory();
+
+			logger.success('Authenticated with QR code');
+			logger.warning('Please wait until the remote session is saved');
 			return;
 		}
 

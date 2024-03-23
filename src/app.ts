@@ -1,18 +1,16 @@
 import 'dotenv/config';
 
-import { createClient, initialize } from '@/client';
+import { ClientSingleton } from '@/client';
 import { logger } from '@/logger';
-import { createMongoose } from '@/mongo';
+import { MongoSingleton } from '@/mongo';
 
 async function main() {
 	console.clear();
 
-	logger.info('Starting app...');
+	logger.ghost('Starting app...');
 
-	await createMongoose();
-	await createClient();
-
-	await initialize();
+	await MongoSingleton.connect();
+	await ClientSingleton.initialize();
 }
 
 main().then(() => {

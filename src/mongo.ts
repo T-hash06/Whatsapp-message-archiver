@@ -8,9 +8,9 @@ export class MongoSingleton {
 
 	private constructor() {}
 
-	public static async getInstance(): Promise<typeof mongooseDefault> {
+	public static getInstance(): typeof mongooseDefault {
 		if (!this.connected) {
-			await this.connect();
+			logger.warning('Using MongoDB without connecting first');
 		}
 
 		if (!MongoSingleton.instance) {
@@ -20,7 +20,9 @@ export class MongoSingleton {
 		return MongoSingleton.instance;
 	}
 
-	private static async connect() {
+	public static async connect() {
+		logger.ghost('Connecting to MongoDB...');
+
 		if (!process.env.MONGO_URI) {
 			throw new Error('MONGO_URI is not defined');
 		}
@@ -29,8 +31,6 @@ export class MongoSingleton {
 
 		this.connected = true;
 
-		logger.info('Connected to MongoDB');
+		logger.success('Connected to MongoDB');
 	}
 }
-
-export const createMongoose = () => MongoSingleton.getInstance();

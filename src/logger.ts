@@ -23,11 +23,34 @@ function formatMessage(msg: string) {
 }
 
 export const logger = {
-	success: (msg: string) =>
-		console.log('\x1b[32m' + formatMessage(msg) + reset),
-	error: (msg: string) =>
-		console.log('\x1b[31m' + formatMessage(msg) + reset),
-	warning: (msg: string) =>
-		console.log('\x1b[33m' + formatMessage(msg) + reset),
-	info: (msg: string) => console.log('\x1b[36m' + formatMessage(msg) + reset),
+	history: [] as string[],
+
+	success: (msg: string) => {
+		const log = '\x1b[32m' + formatMessage(msg) + reset;
+		logger.history.push(log);
+		console.log(log);
+	},
+	error: (msg: string) => {
+		const log = '\x1b[31m' + formatMessage(msg) + reset;
+		logger.history.push(log);
+		console.log(log);
+	},
+	warning: (msg: string) => {
+		const log = '\x1b[33m' + formatMessage(msg) + reset;
+		logger.history.push(log);
+		console.log(log);
+	},
+	ghost: (msg: string) => {
+		const log = '\x1b[2m\x1b[37m' + formatMessage(msg) + reset;
+		logger.history.push(log);
+		console.log(log);
+	},
+	info: (msg: string) => {
+		const log = '\x1b[36m' + formatMessage(msg) + reset;
+		logger.history.push(log);
+		console.log(log);
+	},
+	printHistory: () => {
+		logger.history.forEach((log) => console.log(log));
+	},
 };

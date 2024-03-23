@@ -1,5 +1,6 @@
-import * as mongoose from 'mongoose';
-// TODO: Import mongoose from Singleton
+import { MongoSingleton } from '@/mongo';
+
+const mongoose = MongoSingleton.getInstance();
 
 interface MessageSchema {
 	id: string;

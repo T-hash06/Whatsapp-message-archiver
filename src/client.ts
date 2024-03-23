@@ -3,15 +3,15 @@ import { MongoStore } from 'wwebjs-mongo';
 
 import { addBasicHandlers } from '@/handlers/basics';
 import { addMessageHandler } from '@/handlers/messages';
-import { createMongoose } from '@/mongo';
+import { MongoSingleton } from '@/mongo';
 
 export class ClientSingleton {
 	private static instance: Client;
 
 	private constructor() {}
 
-	public static async getInstance(): Promise<Client> {
-		const mongoose = await createMongoose();
+	public static getInstance(): Client {
+		const mongoose = MongoSingleton.getInstance();
 
 		if (!ClientSingleton.instance) {
 			const store = new MongoStore({ mongoose: mongoose });
@@ -20,7 +20,7 @@ export class ClientSingleton {
 				authStrategy: new RemoteAuth({
 					store: store,
 					backupSyncIntervalMs: 36_000_000,
-					clientId: 'T-Hash06',
+					clientId: process.env.CLIENT_ID ?? 'THash06', // TODO: Extract to config
 				}),
 			});
 
@@ -29,17 +29,15 @@ export class ClientSingleton {
 
 		return ClientSingleton.instance;
 	}
-}
 
-export const createClient = () => ClientSingleton.getInstance();
+	public static async initialize() {
+		const client = ClientSingleton.getInstance();
 
-export async function initialize() {
-	const client = await ClientSingleton.getInstance();
+		addBasicHandlers(client);
+		addMessageHandler(client);
 
-	addBasicHandlers(client);
-	addMessageHandler(client);
-
-	return new Promise<void>(() => {
-		client.initialize();
-	});
+		return new Promise<void>(() => {
+			client.initialize();
+		});
+	}
 }
