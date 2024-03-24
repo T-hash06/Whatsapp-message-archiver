@@ -1,7 +1,7 @@
 import type { Client } from 'whatsapp-web.js';
 
-import { getFormattedDate } from '@/logger';
-import { logger } from '@/logger';
+import { getFormattedDate } from '@/core/logger';
+import { logger } from '@/core/logger';
 import { Media } from '@/schemas/media';
 import { Message } from '@/schemas/message';
 

@@ -1,4 +1,4 @@
-import { MongoSingleton } from '@/mongo';
+import { MongoSingleton } from '@/core/mongo';
 
 const mongoose = MongoSingleton.getInstance();
 

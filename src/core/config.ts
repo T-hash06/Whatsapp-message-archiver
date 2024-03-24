@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { logger } from '@/logger';
+import { logger } from '@/core/logger';
 
 export class ConfigSingleton {
 	private static instance: ConfigSingleton;

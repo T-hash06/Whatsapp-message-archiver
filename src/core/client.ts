@@ -1,10 +1,10 @@
 import { Client, RemoteAuth } from 'whatsapp-web.js';
 import { MongoStore } from 'wwebjs-mongo';
 
-import { Config } from '@/config';
+import { Config } from '@/core/config';
+import { MongoSingleton } from '@/core/mongo';
 import { addBasicHandlers } from '@/handlers/basics';
 import { addMessageHandler } from '@/handlers/messages';
-import { MongoSingleton } from '@/mongo';
 
 export class ClientSingleton {
 	private static instance: Client;

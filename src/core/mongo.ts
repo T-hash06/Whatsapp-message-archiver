@@ -1,7 +1,7 @@
 import mongooseDefault from 'mongoose';
 
-import { Config } from '@/config';
-import { logger } from '@/logger';
+import { Config } from '@/core/config';
+import { logger } from '@/core/logger';
 
 export class MongoSingleton {
 	private static instance: typeof mongooseDefault;

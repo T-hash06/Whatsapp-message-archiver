@@ -1,10 +1,10 @@
 console.clear();
 
-import '@/config';
+import '@/core/config';
 
-import { ClientSingleton } from '@/client';
-import { logger } from '@/logger';
-import { MongoSingleton } from '@/mongo';
+import { ClientSingleton } from '@/core/client';
+import { logger } from '@/core/logger';
+import { MongoSingleton } from '@/core/mongo';
 
 async function main() {
 	logger.ghost('Starting app...');
