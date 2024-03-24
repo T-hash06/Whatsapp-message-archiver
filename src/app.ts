@@ -1,12 +1,12 @@
-import 'dotenv/config';
+console.clear();
+
+import '@/config';
 
 import { ClientSingleton } from '@/client';
 import { logger } from '@/logger';
 import { MongoSingleton } from '@/mongo';
 
 async function main() {
-	console.clear();
-
 	logger.ghost('Starting app...');
 
 	await MongoSingleton.connect();
@@ -14,5 +14,5 @@ async function main() {
 }
 
 main().then(() => {
-	console.log('App finished');
+	logger.ghost('App finished');
 });

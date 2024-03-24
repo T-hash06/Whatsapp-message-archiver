@@ -1,5 +1,10 @@
 const reset = '\x1b[0m';
 
+export function addIndentation(text: string) {
+	// Add indentation to the text on new lines
+	return text.replace(/\n/g, '\n\t\t      ');
+}
+
 export function formatNumber(num: number) {
 	return num < 10 ? `0${num}` : num;
 }
@@ -19,7 +24,7 @@ export function getFormattedDate() {
 }
 
 function formatMessage(msg: string) {
-	return `[${getFormattedDate()}] ${msg}`;
+	return `[${getFormattedDate()}] ${addIndentation(msg)}`;
 }
 
 export const logger = {
