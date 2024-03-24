@@ -1,5 +1,6 @@
 import { type Client, MessageTypes } from 'whatsapp-web.js';
 
+import { Config } from '@/core/config';
 import { getFormattedDate } from '@/core/logger';
 import { logger } from '@/core/logger';
 import { Media } from '@/schemas/media';
@@ -35,6 +36,14 @@ export const addMessageHandler = (client: Client) => {
 		if (message.isStatus) {
 			logger.info(`New status from ${contact}, status will be ignored`);
 			// TODO: Save status to database
+			return;
+		}
+
+		if (
+			!Config.SAVE_ALL_MESSAGES &&
+			!Config.SAVE_MESSAGES_FROM.includes(from)
+		) {
+			logger.info(`Message from ${contact} will be ignored`);
 			return;
 		}
 
