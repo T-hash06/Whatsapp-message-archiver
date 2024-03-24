@@ -5,10 +5,13 @@ import { logger } from '@/logger';
 export class ConfigSingleton {
 	private static instance: ConfigSingleton;
 
+	public readonly CLIENT_ID: string;
 	public readonly MONGO_URI: string;
-	public readonly SAVE_ALL_MESSAGES: boolean = false;
-	public readonly PRINT_CONFIG = process.env.PRINT_CONFIG === 'true';
+	public readonly PRINT_CONFIG: boolean;
+	public readonly SAVE_ALL_MESSAGES: boolean;
 	public readonly SAVE_MESSAGES_FROM: string[];
+
+	private static readonly DEFAULT_CLIENT_ID = 'default';
 
 	private constructor() {
 		logger.ghost('Loading configuration...');
@@ -22,7 +25,15 @@ export class ConfigSingleton {
 
 		this.SAVE_ALL_MESSAGES = process.env.SAVE_ALL_MESSAGES === 'true';
 		this.PRINT_CONFIG = process.env.PRINT_CONFIG === 'true';
+		this.CLIENT_ID =
+			process.env.CLIENT_ID || ConfigSingleton.DEFAULT_CLIENT_ID;
 
+		this.showConfigLogs();
+
+		logger.success('Configuration loaded');
+	}
+
+	private showConfigLogs() {
 		if (this.SAVE_ALL_MESSAGES && this.SAVE_MESSAGES_FROM.length > 0) {
 			logger.warning(
 				'Both SAVE_ALL_MESSAGES and SAVE_MESSAGES_FROM are set. SAVE_MESSAGES_FROM will be ignored.'
@@ -35,7 +46,11 @@ export class ConfigSingleton {
 			);
 		}
 
-		logger.ghost('Configuration loaded');
+		if (this.CLIENT_ID === ConfigSingleton.DEFAULT_CLIENT_ID) {
+			logger.warning(
+				`No CLIENT_ID was provided. Defaulting to '${this.CLIENT_ID}'`
+			);
+		}
 
 		if (this.PRINT_CONFIG) {
 			logger.info(

@@ -1,6 +1,7 @@
 import { Client, RemoteAuth } from 'whatsapp-web.js';
 import { MongoStore } from 'wwebjs-mongo';
 
+import { Config } from '@/config';
 import { addBasicHandlers } from '@/handlers/basics';
 import { addMessageHandler } from '@/handlers/messages';
 import { MongoSingleton } from '@/mongo';
@@ -20,7 +21,7 @@ export class ClientSingleton {
 				authStrategy: new RemoteAuth({
 					store: store,
 					backupSyncIntervalMs: 36_000_000,
-					clientId: process.env.CLIENT_ID ?? 'THash06', // TODO: Extract to config
+					clientId: Config.CLIENT_ID,
 				}),
 			});
 

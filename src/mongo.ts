@@ -1,5 +1,6 @@
 import mongooseDefault from 'mongoose';
 
+import { Config } from '@/config';
 import { logger } from '@/logger';
 
 export class MongoSingleton {
@@ -23,11 +24,7 @@ export class MongoSingleton {
 	public static async connect() {
 		logger.ghost('Connecting to MongoDB...');
 
-		if (!process.env.MONGO_URI) {
-			throw new Error('MONGO_URI is not defined');
-		}
-
-		await mongooseDefault.connect(process.env.MONGO_URI);
+		await mongooseDefault.connect(Config.MONGO_URI);
 
 		this.connected = true;
 
