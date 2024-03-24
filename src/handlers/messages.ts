@@ -1,4 +1,4 @@
-import type { Client } from 'whatsapp-web.js';
+import { type Client, MessageTypes } from 'whatsapp-web.js';
 
 import { getFormattedDate } from '@/core/logger';
 import { logger } from '@/core/logger';
@@ -32,6 +32,12 @@ export const addMessageHandler = (client: Client) => {
 			responseTo = quotedMsg.id.id;
 		}
 
+		if (message.isStatus) {
+			logger.info(`New status from ${contact}, status will be ignored`);
+			// TODO: Save status to database
+			return;
+		}
+
 		if (message.hasMedia) {
 			const messageMedia = await message.downloadMedia();
 			const mediaId = message.id.id;
@@ -55,7 +61,7 @@ export const addMessageHandler = (client: Client) => {
 			}
 		}
 
-		if (message.type === 'location') {
+		if (message.type === MessageTypes.LOCATION) {
 			body = `${message.location.latitude},${message.location.longitude}`;
 		}
 
