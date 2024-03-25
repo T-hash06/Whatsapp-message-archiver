@@ -34,7 +34,7 @@ export const addMessageHandler = (client: Client) => {
 		}
 
 		if (message.isStatus) {
-			logger.info(`New status from ${contact}, status will be ignored`);
+			logger.ghost(`Status from ${contact}, status will be ignored`);
 			// TODO: Save status to database
 			return;
 		}
@@ -43,7 +43,7 @@ export const addMessageHandler = (client: Client) => {
 			!Config.SAVE_ALL_MESSAGES &&
 			!Config.SAVE_MESSAGES_FROM.includes(from)
 		) {
-			logger.info(`Message from ${contact} will be ignored`);
+			logger.ghost(`Message from ${contact} will be ignored`);
 			return;
 		}
 
