@@ -24,9 +24,12 @@ export class ConfigSingleton {
 			: [];
 
 		this.SAVE_ALL_MESSAGES = process.env.SAVE_ALL_MESSAGES === 'true';
-		this.PRINT_CONFIG = process.env.PRINT_CONFIG === 'true';
 		this.CLIENT_ID =
 			process.env.CLIENT_ID || ConfigSingleton.DEFAULT_CLIENT_ID;
+
+		this.PRINT_CONFIG = process.env.PRINT_CONFIG
+			? process.env.PRINT_CONFIG === 'true'
+			: true;
 
 		this.showConfigLogs();
 
@@ -53,6 +56,9 @@ export class ConfigSingleton {
 		}
 
 		if (this.PRINT_CONFIG) {
+			logger.warning(
+				'Printing configuration, to disable it set PRINT_CONFIG=false in .env'
+			);
 			logger.info(
 				`Current configuration: \n${JSON.stringify(this, null, 4)}`
 			);

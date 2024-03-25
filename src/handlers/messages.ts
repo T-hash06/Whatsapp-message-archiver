@@ -41,9 +41,9 @@ async function messageHandler(message: WMessage) {
 	const date = new Date(message.timestamp);
 	const from = getPhoneNumber(message.from);
 	const to = getPhoneNumber(message.to);
-	const _id = message.id.id;
 	const fromMe = message.fromMe;
 	const contact = contactInfo.name ?? contactInfo.pushname;
+	const _id = message.id.id;
 
 	const type = message.type;
 	const target = fromMe ? `to ${chat.name}` : `from ${contact}`;
