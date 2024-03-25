@@ -1,6 +1,6 @@
 {
 	"name": "whatsapp-message-archiver",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"description": "Whatsapp Message Archiver: Automatically save incoming WhatsApp messages to MongoDB for reliable backups",
 	"main": "index.js",
 	"scripts": {

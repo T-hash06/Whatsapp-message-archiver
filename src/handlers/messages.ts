@@ -1,4 +1,5 @@
 import {
+	type Chat as WChat,
 	type Client as WClient,
 	type Message as WMessage,
 	MessageTypes,
@@ -13,6 +14,22 @@ import { Message } from '@/schemas/message';
 
 function getPhoneNumber(phone: string) {
 	return phone.split('@')[0];
+}
+
+function mustBeSaved(message: WMessage, chat: WChat) {
+	return (
+		Config.SAVE_ALL_MESSAGES ||
+		Config.SAVE_MESSAGES_FROM.some((register) => {
+			const normalized = register.toLowerCase();
+			return (
+				normalized === chat.name.toLowerCase() ||
+				normalized === chat.id._serialized ||
+				normalized === chat.id.user ||
+				normalized === getPhoneNumber(message.from) ||
+				normalized === getPhoneNumber(message.to)
+			);
+		})
+	);
 }
 
 async function messageHandler(message: WMessage) {
@@ -36,13 +53,7 @@ async function messageHandler(message: WMessage) {
 	let responseTo = null;
 	let media = null;
 
-	if (
-		!(
-			Config.SAVE_ALL_MESSAGES ||
-			Config.SAVE_MESSAGES_FROM.includes(from) ||
-			Config.SAVE_MESSAGES_FROM.includes(to)
-		)
-	) {
+	if (!mustBeSaved(message, chat)) {
 		logger.ghost(`Message ${target} will be ignored`);
 		return;
 	}
