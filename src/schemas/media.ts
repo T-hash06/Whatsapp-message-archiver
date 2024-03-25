@@ -2,14 +2,14 @@ import { MongoSingleton } from '@/core/mongo';
 
 const mongoose = MongoSingleton.getInstance();
 
-interface MessageSchema {
-	id: string;
+export interface MediaSchema {
+	_id: string;
 	mimeType: string;
 	data: string;
 }
 
-const mediaSchema = new mongoose.Schema<MessageSchema>({
-	id: String,
+export const mediaSchema = new mongoose.Schema<MediaSchema>({
+	_id: String,
 	mimeType: String,
 	data: String,
 });

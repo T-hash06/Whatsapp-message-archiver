@@ -9,7 +9,7 @@ export function formatNumber(num: number) {
 	return num < 10 ? `0${num}` : num;
 }
 
-export function getFormattedDate() {
+export function getFormattedDateString() {
 	const date = new Date();
 
 	const hours = formatNumber(date.getHours());
@@ -24,7 +24,7 @@ export function getFormattedDate() {
 }
 
 function formatMessage(msg: string) {
-	return `[${getFormattedDate()}] ${addIndentation(msg)}`;
+	return `[${getFormattedDateString()}] ${addIndentation(msg)}`;
 }
 
 export const logger = {
